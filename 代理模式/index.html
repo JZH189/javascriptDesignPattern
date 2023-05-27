@@ -1,0 +1,41 @@
+<script>
+  /**
+   * 代理模式提供了一个代理对象，该对象可以控制对实际对象的访问，并在必要时添加额外的逻辑。
+   **/
+
+  class RealSubject {
+    request() {
+      console.log("RealSubject: Handling request.");
+    }
+  }
+
+  class Proxy {
+    constructor(realSubject) {
+      this.realSubject = realSubject;
+    }
+
+    request() {
+      if (this.checkAccess()) {
+        this.realSubject.request();
+        //额外的逻辑
+        this.logRequest();
+      }
+    }
+
+    checkAccess() {
+      // 在此处可以进行权限检查
+      console.log("Proxy: Checking access.");
+      return true;
+    }
+
+    logRequest() {
+      console.log("Proxy: Logging the request.");
+    }
+  }
+
+  // 示例使用
+  const realSubject = new RealSubject();
+  const proxy = new Proxy(realSubject);
+
+  proxy.request();
+</script>

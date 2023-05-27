@@ -1,0 +1,61 @@
+<script>
+  /**
+   * 策略模式是一种行为设计模式。
+   * 它定义了一系列算法，并将每个算法封装在独立的类中，使它们可以相互替换。
+   * 
+   * 
+    优点：
+
+    可替换性：策略模式使得算法可以独立于使用它的客户端而变化。不同的策略可以根据需要进行替换，而无需修改客户端代码。
+    灵活性：策略模式提供了一种灵活的方式来配置、选择和使用不同的算法。可以根据需求动态地切换策略，以适应不同的上下文或场景。
+    可维护性：由于策略模式将每个算法封装在独立的类中，使得代码更加模块化和可维护。当需要添加新的策略时，不会影响现有的代码，易于扩展和维护。
+  
+    缺点：
+
+    增加类的数量：策略模式会引入多个策略类，可能会增加类的数量。如果策略较多，可能会导致类的数量过多，增加代码复杂性和理解难度。
+    客户端需要了解不同的策略：使用策略模式的客户端需要了解不同的策略类，并选择合适的策略。这增加了客户端的责任和复杂性。
+    运行时开销：由于策略模式通过动态切换策略来实现不同的行为，可能会在运行时产生一些开销。每次切换策略都需要进行一定的计算和判断，可能会对性能产生一定影响。
+   * 
+   * 
+   */
+
+   class Strategy {
+      execute(){
+        throw new Error('execute method must be implemented');
+      };
+    }
+
+    class ConcreteStrategyA extends Strategy {
+      execute(){
+        console.log('Executing ConcreteStrategyA');
+      };
+    }
+
+    class ConcreteStrategyB extends Strategy {
+      execute(){
+        console.log('Executing ConcreteStrategyB');
+      };
+    }
+
+    class Context {
+      constructor(strategy) {
+        this.strategy = strategy;
+      }
+
+      setStrategy(strategy) {
+        this.strategy = strategy;
+      }
+
+      executeStrategy() {
+        this.strategy.execute();
+      }
+    }
+
+    // 示例使用
+    const context = new Context(new ConcreteStrategyA());
+    context.executeStrategy(); // 输出: "Executing ConcreteStrategyA"
+
+    context.setStrategy(new ConcreteStrategyB());
+    context.executeStrategy(); // 输出: "Executing ConcreteStrategyB"
+
+</script>

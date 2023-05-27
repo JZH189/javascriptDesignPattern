@@ -1,0 +1,60 @@
+
+<script>
+
+//单例模式的定义是：保证一个类仅有一个实例，并提供一个访问它的全局访问点。
+// 需要注意的是，使用类实现的单例模式只在同一个JavaScript环境中有效。
+// 如果在不同的上下文或不同的模块中引用该类，会创建出多个实例。
+// 如果需要在多个模块中共享同一个实例，可以考虑使用单例模式的其他实现方式，如全局变量、模块模式等。
+  class Singleton {
+    name = 'Singleton Instance';
+    constructor() {
+      if (typeof Singleton.instance === 'object') {
+        return Singleton.instance;
+      }
+      // 正常的构造逻辑
+      Singleton.instance = this;
+      return this;
+    }
+  }
+
+  // 示例使用
+  const instance1 = new Singleton();
+  const instance2 = new Singleton();
+
+  console.log(instance1 === instance2); // 输出: true
+  console.log(instance1.name); // 输出: "Singleton Instance"
+  console.log(instance2.name); // 输出: "Singleton Instance"
+
+
+
+  // 们可以通过使用闭包来优化代码，将单例实例保存在闭包中，而不是使用类的静态属性。这样可以更好地隐藏实例，并提供更好的封装性。以下是经过优化的示例代码
+  const Singleton = (function () {
+      let instance;
+
+      function createInstance() {
+        // 正常的构造逻辑
+        const object = new Object();
+        object.name = 'Singleton Instance';
+        return object;
+      }
+
+      return {
+        getInstance: function () {
+          if (!instance) {
+            instance = createInstance();
+          }
+          return instance;
+        }
+      };
+    })();
+
+    // 示例使用
+    const instance1 = Singleton.getInstance();
+    const instance2 = Singleton.getInstance();
+
+    console.log(instance1 === instance2); // 输出: true
+    console.log(instance1.name); // 输出: "Singleton Instance"
+    console.log(instance2.name); // 输出: "Singleton Instance"
+
+
+</script>
