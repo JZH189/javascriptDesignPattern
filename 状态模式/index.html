@@ -1,0 +1,69 @@
+<script>
+
+  //状态模式是一种行为设计模式，它允许对象在内部状态改变时改变其行为。
+
+  // 状态接口
+  class State {
+    handleState() { }
+  }
+
+  // 具体状态A
+  class ConcreteStateA extends State {
+    handleState() {
+      console.log("Handling state A");
+    }
+  }
+
+  // 具体状态B
+  class ConcreteStateB extends State {
+    handleState() {
+      console.log("Handling state B");
+    }
+  }
+
+  // 上下文类
+  class Context {
+    constructor() {
+      this.state = null;
+    }
+
+    setState(state) {
+      this.state = state;
+    }
+
+    request() {
+      if (this.state) {
+        this.state.handleState();
+      }
+    }
+  }
+
+  // 客户端代码
+  const context = new Context();
+
+  const stateA = new ConcreteStateA();
+  context.setState(stateA);
+  context.request();
+
+  const stateB = new ConcreteStateB();
+  context.setState(stateB);
+  context.request();
+
+  /*
+  
+  在上述示例中，我们首先定义了一个状态接口State，它声明了一个handleState方法，用于处理不同状态的行为。
+
+  然后，我们创建了具体的状态类ConcreteStateA和ConcreteStateB，它们分别继承自状态接口，并实现了自己的handleState方法。
+
+  在上下文类Context中，我们维护了一个当前状态state的引用。通过setState方法，我们可以设置当前状态。
+  request方法用于请求处理，根据当前状态的不同，调用相应状态的handleState方法。
+
+  在客户端代码中，我们创建了上下文对象context。然后，我们创建了具体状态对象stateA和stateB，并通过setState方法将其设置为当前状态。
+  最后，通过调用request方法，上下文对象根据当前状态的不同，执行相应的处理。
+
+  状态模式的关键在于将对象的行为封装在不同的状态类中，使得对象的行为可以根据内部状态的改变而改变。
+  这种设计使得对象的状态转换更加灵活、可扩展，并且将状态相关的代码聚集在一起，提高了代码的可维护性和可读性。
+
+  */
+
+</script>

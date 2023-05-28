@@ -1,0 +1,80 @@
+<script>
+
+  //装饰者模式是一种结构设计模式，它允许在不修改原始对象的情况下动态地扩展其功能
+
+  // 原始对象
+  class Component {
+    operation() {
+      console.log("Component operation");
+    }
+  }
+
+  // 装饰者基类
+  class Decorator {
+    constructor(component) {
+      this.component = component;
+    }
+
+    operation() {
+      this.component.operation();
+    }
+  }
+
+  // 具体装饰者A
+  class ConcreteDecoratorA extends Decorator {
+    operation() {
+      super.operation();
+      this.additionalOperation();
+    }
+
+    additionalOperation() {
+      console.log("ConcreteDecoratorA additional operation");
+    }
+  }
+
+  // 具体装饰者B
+  class ConcreteDecoratorB extends Decorator {
+    operation() {
+      super.operation();
+      this.additionalOperation();
+    }
+
+    additionalOperation() {
+      console.log("ConcreteDecoratorB additional operation");
+    }
+  }
+
+  // 客户端代码
+  const component = new Component();
+  const decorator = new ConcreteDecoratorB(new ConcreteDecoratorA(component));
+
+  decorator.operation();
+
+  /*
+  在上述示例中，我们首先定义了一个原始对象Component，它包含一个基本的操作operation。
+
+  然后，我们定义了一个装饰者基类Decorator，它接收一个原始对象作为构造函数的参数，并在自身的operation方法中调用原始对象的操作。
+
+  具体的装饰者类ConcreteDecoratorA和ConcreteDecoratorB继承自装饰者基类，并在自身的operation方法中调用父类的operation方法，然后添加额外的操作。
+
+  在客户端代码中，我们创建了原始对象component，然后将它依次传递给ConcreteDecoratorA和ConcreteDecoratorB进行装饰。
+
+  当我们调用最终的装饰者decoratorB的operation方法时，装饰者模式会依次执行装饰者链中的操作，包括调用原始对象的操作和添加的额外操作。
+
+  装饰者模式的优点包括：
+
+  1、动态扩展功能：装饰者模式允许在不修改现有对象的情况下，动态地添加或修改其功能。通过使用装饰者，可以在运行时给对象添加额外的行为或状态，从而实现功能的动态扩展。
+
+  2、遵循开放封闭原则：装饰者模式通过将对象包装在装饰者中，遵循开放封闭原则。原始对象无需修改，而是通过添加装饰者来扩展其功能，从而保持代码的稳定性和可扩展性。
+
+  3、灵活组合装饰者：装饰者模式可以灵活组合多个装饰者对象，形成一个装饰者链。每个装饰者可以独立地扩展对象的功能，而且可以按需求自由组合和排序装饰者，实现不同的功能组合。
+
+  4、单一职责原则：装饰者模式将功能的添加和修改分散到多个装饰者中，每个装饰者只关注自己的职责。这样可以遵循单一职责原则，使得每个类的责任更加清晰和可维护。
+
+  5、可以动态地撤销装饰：由于装饰者模式是动态的，可以在运行时动态地添加和移除装饰者。这样，如果不需要某个装饰者的功能，可以轻松地将其移除，恢复原始对象的状态。
+
+  6、可以多次装饰：装饰者模式可以多次装饰同一个对象，每个装饰者可以添加不同的功能。这种灵活性允许我们在不同的场景下使用不同的装饰者组合，满足具体的需求。
+
+  */
+
+</script>

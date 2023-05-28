@@ -1,0 +1,26 @@
+<script>
+  // 迭代器模式可以帮助你在一个集合对象上逐步迭代访问元素，而不必暴露集合的内部结构。
+
+  // 定义一个集合对象
+  const collection = {
+    items: [1,2,3,4,5],
+
+    // 添加元素到集合
+    addItem(item) {
+      this.items.push(item);
+    },
+
+    // 使用生成器函数创建迭代器
+    *createIterator() {
+      for (let i = 0; i < this.items.length; i++) {
+        yield this.items[i];
+      }
+    },
+  };
+
+  // 使用迭代器访问集合中的元素
+  const iterator = collection.createIterator();
+  for (const item of iterator) {
+    console.log(item);
+  }
+</script>

@@ -1,0 +1,93 @@
+<script>
+  //职责链模式是一种行为设计模式，它允许多个对象按照顺序处理请求，直到其中一个对象能够处理它。
+  
+  // 抽象处理器类
+  class Handler {
+    constructor() {
+      this.nextHandler = null;
+    }
+
+    setNext(handler) {
+      this.nextHandler = handler;
+      return handler;
+    }
+
+    handleRequest(request) {
+      if (this.canHandle(request)) {
+        this.performHandling(request);
+      } else if (this.nextHandler) {
+        this.nextHandler.handleRequest(request);
+      } else {
+        console.log("No handler available to handle the request.");
+      }
+    }
+
+    canHandle(request) {
+      throw new Error("canHandle(request) method must be implemented.");
+    }
+
+    performHandling(request) {
+      throw new Error("performHandling(request) method must be implemented.");
+    }
+  }
+
+  // 具体处理器类A
+  class ConcreteHandlerA extends Handler {
+    canHandle(request) {
+      return request === "A";
+    }
+
+    performHandling(request) {
+      console.log("ConcreteHandlerA: Handling request A.");
+    }
+  }
+
+  // 具体处理器类B
+  class ConcreteHandlerB extends Handler {
+    canHandle(request) {
+      return request === "B";
+    }
+
+    performHandling(request) {
+      console.log("ConcreteHandlerB: Handling request B.");
+    }
+  }
+
+  // 具体处理器类C
+  class ConcreteHandlerC extends Handler {
+    canHandle(request) {
+      return request === "C";
+    }
+
+    performHandling(request) {
+      console.log("ConcreteHandlerC: Handling request C.");
+    }
+  }
+
+  // 客户端代码
+  const handlerA = new ConcreteHandlerA();
+  const handlerB = new ConcreteHandlerB();
+  const handlerC = new ConcreteHandlerC();
+
+  handlerA.setNext(handlerB).setNext(handlerC);
+
+  // 发送请求
+  handlerA.handleRequest("A"); // ConcreteHandlerA 处理请求 A
+  handlerA.handleRequest("B"); // ConcreteHandlerB 处理请求 B
+  handlerA.handleRequest("C"); // ConcreteHandlerC 处理请求 C
+  handlerA.handleRequest("D"); // 请求无法处理
+
+  /**
+  在上面的示例中，我们定义了一个抽象处理器类Handler，其中包含了设置下一个处理器的方法setNext(handler)和处理请求的方法handleRequest(request)。
+  
+  具体的处理器类ConcreteHandlerA、ConcreteHandlerB 和 ConcreteHandlerC 继承自抽象处理器类，并实现了自己的请求处理逻辑。
+
+  在客户端代码中，我们创建了具体处理器类的实例handlerA、handlerB和handlerC。然后，通过调用setNext方法将它们连接起来形成一个职责链。
+  最后，我们可以使用职责链的起点handlerA来发送请求，职责链会按照顺序逐个处理请求，直到找到能够处理它的处理器。
+
+  在示例中，我们依次发送了请求"A"、"B"、"C"和"D"。根据职责链的规则，"A"请求会被handlerA处理，"B"请求会被handlerB处理，"C"请求会被handlerC处理，而"D"请求无法被任何处理器处理。
+
+  职责链模式的优点在于它将请求的发送者和接收者解耦，使得多个对象都有机会处理请求，增强了灵活性。
+  */
+
+</script>

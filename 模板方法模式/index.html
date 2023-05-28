@@ -1,0 +1,67 @@
+<script>
+
+  //模板方法模式是一种行为设计模式，它定义了一个操作中的算法骨架，将一些步骤延迟到子类中实现。
+
+  // 抽象类
+  class AbstractClass {
+    templateMethod() {
+      this.step1();
+      this.step2();
+      this.step3();
+    }
+
+    step1() {
+      throw new Error("step1() method must be implemented.");
+    }
+
+    step2() {
+      throw new Error("step2() method must be implemented.");
+    }
+
+    step3() {
+      throw new Error("step3() method must be implemented.");
+    }
+  }
+
+  // 具体类A
+  class ConcreteClassA extends AbstractClass {
+    step1() {
+      console.log("ConcreteClassA: Step 1");
+    }
+
+    step2() {
+      console.log("ConcreteClassA: Step 2");
+    }
+
+    step3() {
+      console.log("ConcreteClassA: Step 3");
+    }
+  }
+
+  // 具体类B
+  class ConcreteClassB extends AbstractClass {
+    step1() {
+      console.log("ConcreteClassB: Step 1");
+    }
+
+    step2() {
+      console.log("ConcreteClassB: Step 2");
+    }
+
+    step3() {
+      console.log("ConcreteClassB: Step 3");
+    }
+  }
+
+  // 创建具体类实例并调用模板方法
+  const concreteA = new ConcreteClassA();
+  concreteA.templateMethod();
+
+  const concreteB = new ConcreteClassB();
+  concreteB.templateMethod();
+
+/**
+ * 模板方法模式的优点在于它将通用算法骨架定义在抽象类中，避免了代码重复，并允许具体子类灵活地实现各自的步骤。
+ * 它提供了一种扩展算法的方式，而无需修改模板方法的结构。
+*/
+</script>

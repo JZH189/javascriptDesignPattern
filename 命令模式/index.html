@@ -1,0 +1,95 @@
+<script>
+
+  //使用JavaScript实现命令模式可以帮助将请求封装成独立的对象，并将其参数化和操作化，以便在不同的上下文中使用
+
+  // 命令接口
+  class Command {
+    execute() { }
+  }
+
+  // 具体命令类
+  class ConcreteCommand1 extends Command {
+    constructor(receiver) {
+      super();
+      this.receiver = receiver;
+    }
+
+    execute() {
+      this.receiver.action1();
+    }
+  }
+
+  class ConcreteCommand2 extends Command {
+    constructor(receiver) {
+      super();
+      this.receiver = receiver;
+    }
+
+    execute() {
+      this.receiver.action2();
+    }
+  }
+
+  // 接收者类
+  class Receiver {
+    action1() {
+      console.log("Receiver: Performing action 1.");
+    }
+
+    action2() {
+      console.log("Receiver: Performing action 2.");
+    }
+  }
+
+  // 调用者类
+  class Invoker {
+    constructor() {
+      this.commands = [];
+    }
+
+    addCommand(command) {
+      this.commands.push(command);
+    }
+
+    executeCommands() {
+      this.commands.forEach(command => command.execute());
+      this.commands = [];
+    }
+  }
+
+  // 创建接收者对象
+  const receiver = new Receiver();
+
+  // 创建具体命令对象
+  const command1 = new ConcreteCommand1(receiver);
+  const command2 = new ConcreteCommand2(receiver);
+
+  // 创建调用者对象
+  const invoker = new Invoker();
+
+  // 添加命令到调用者
+  invoker.addCommand(command1);
+  invoker.addCommand(command2);
+
+  // 执行命令
+  invoker.executeCommands();
+
+
+  /*
+  命令模式在以下情况下可以很好地应用：
+
+   1、 撤销 / 重做操作：命令模式可以用于实现撤销和重做功能。每个命令对象都可以记录执行所需的状态和参数，以便在需要时撤销或重做该命令。
+
+   2、 异步操作：当需要执行异步操作并且需要在稍后的时间点触发操作时，命令模式很有用。命令对象可以包含必要的信息和回调函数，以便在异步操作完成后执行相应的操作。
+
+   3、 宏命令：宏命令是由多个子命令组合而成的命令。命令模式可以用于创建宏命令，使得可以将一系列命令组合在一起并作为一个单一的命令执行。
+
+   4、 队列请求处理：命令模式可以用于将请求放入队列中，并按照一定的顺序逐个执行。这对于控制并发访问或按顺序处理请求很有帮助。
+
+   5、日志记录：通过使用命令模式，可以记录和存储执行的命令，以便后续进行日志记录、回放或审计。
+
+   6、 GUI操作：在图形用户界面中，命令模式常被用于处理用户操作。每个操作都可以封装为一个命令对象，并由调用者执行。
+
+    总之，命令模式适用于需要将请求封装成独立对象，并支持撤销、扩展和灵活组合的情况。它有助于解耦请求的发送者和接收者，并提供了一种可扩展和可管理的方式来处理操作。
+*/
+</script>

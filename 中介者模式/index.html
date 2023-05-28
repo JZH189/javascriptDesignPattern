@@ -1,0 +1,89 @@
+<script>
+
+  //中介者模式是一种行为设计模式，它通过引入中介者对象来解耦多个对象之间的交互。
+  // 中介者类
+  class Mediator {
+    constructor() {
+      this.colleague1 = null;
+      this.colleague2 = null;
+    }
+
+    setColleague1(colleague1) {
+      this.colleague1 = colleague1;
+    }
+
+    setColleague2(colleague2) {
+      this.colleague2 = colleague2;
+    }
+
+    send(message, sender) {
+      if (sender === this.colleague1) {
+        this.colleague2.receive(message);
+      } else if (sender === this.colleague2) {
+        this.colleague1.receive(message);
+      }
+    }
+  }
+
+  // 同事类A
+  class ColleagueA {
+    constructor(mediator) {
+      this.mediator = mediator;
+    }
+
+    send(message) {
+      this.mediator.send(message, this);
+    }
+
+    receive(message) {
+      console.log("ColleagueA received:", message);
+    }
+  }
+
+  // 同事类B
+  class ColleagueB {
+    constructor(mediator) {
+      this.mediator = mediator;
+    }
+
+    send(message) {
+      this.mediator.send(message, this);
+    }
+
+    receive(message) {
+      console.log("ColleagueB received:", message);
+    }
+  }
+
+  // 客户端代码
+  const mediator = new Mediator();
+
+  const colleagueA = new ColleagueA(mediator);
+  const colleagueB = new ColleagueB(mediator);
+
+  mediator.setColleague1(colleagueA);
+  mediator.setColleague2(colleagueB);
+
+  colleagueA.send("Hello from ColleagueA!");
+  colleagueB.send("Hi from ColleagueB!");
+
+  /*
+  在上述示例中，我们定义了一个中介者类Mediator，它维护了两个同事对象colleague1和colleague2之间的关联关系。
+  通过setColleague1和setColleague2方法，我们将同事对象与中介者关联起来。
+
+  同事对象ColleagueA和ColleagueB分别具有发送消息和接收消息的能力。
+  当同事对象调用send方法发送消息时，中介者会根据发送者是哪个同事对象来决定将消息发送给另一个同事对象的receive方法。
+
+  在客户端代码中，我们创建了中介者对象和两个同事对象。然后，通过setColleague1和setColleague2方法将同事对象与中介者关联起来。
+  最后，我们可以使用同事对象的send方法发送消息，中介者会负责将消息传递给适当的接收者。
+
+  中介者模式的优点包括：
+
+  解耦对象之间的交互：中介者模式将多个对象之间的交互逻辑集中在中介者对象中，使得对象之间的关系更加松散，
+  减少了对象之间的直接依赖关系，提高了系统的可维护性和扩展性。
+
+  集中控制逻辑：中介者模式将交互逻辑集中在中介者对象
+
+  */
+
+</script>

@@ -1,0 +1,71 @@
+<script>
+
+  //享元模式是一种结构型设计模式，它通过共享对象来最小化内存使用和提高性能。
+
+  // 享元工厂类
+  class FlyweightFactory {
+    constructor() {
+      this.flyweights = new Map();
+    }
+
+    getFlyweight(key) {
+      if (!this.flyweights.has(key)) {
+        this.flyweights.set(key, new ConcreteFlyweight(key));
+      }
+      return this.flyweights.get(key);
+    }
+  }
+
+  // 享元基类
+  class Flyweight {
+    operation() {
+      throw new Error("operation() method must be implemented.");
+    }
+  }
+
+  // 具体享元类
+  class ConcreteFlyweight extends Flyweight {
+    constructor(key) {
+      super();
+      this.key = key;
+    }
+
+    operation() {
+      console.log(`ConcreteFlyweight with key ${this.key}: Performing operation.`);
+    }
+  }
+
+  // 客户端代码
+  const factory = new FlyweightFactory();
+
+  debugger
+  const flyweight1 = factory.getFlyweight("key1");
+  flyweight1.operation();
+
+  const flyweight2 = factory.getFlyweight("key2");
+  flyweight2.operation();
+
+  const flyweight3 = factory.getFlyweight("key1");
+  flyweight3.operation();
+
+  /*
+
+  在上面的示例中，我们定义了一个享元工厂类FlyweightFactory，它负责创建和管理享元对象。
+  工厂类内部维护了一个享元对象的缓存，根据传入的键值检查缓存中是否存在相应的享元对象。
+  如果缓存中不存在，则创建一个新的具体享元对象，并将其添加到缓存中。如果缓存中已存在相应的享元对象，则直接返回该对象。
+
+  享元基类Flyweight定义了享元对象的接口，其中的operation方法需要在具体享元类中实现。
+
+  具体享元类ConcreteFlyweight表示具体的享元对象，它包含一个内部状态key，并实现了operation方法。
+
+  在客户端代码中，我们使用享元工厂来获取享元对象。通过调用factory.getFlyweight(key)方法，工厂会根据传入的键值返回相应的享元对象。
+  然后我们调用享元对象的operation方法来执行相应的操作。
+
+  在示例中，我们创建了三个享元对象：flyweight1、flyweight2和flyweight3。
+  尽管flyweight1和flyweight3具有相同的键值"key1"，但它们实际上是同一个享元对象，因为它们共享了相同的内部状态。
+
+  享元模式的优点在于它可以减少内存占用，特别是当有大量相似对象需要创建时。通过共享对象，可以节省内存并提高性能。
+  然而，享元模式也会引入对象共享和状态共享的复杂性，因此在使用时需要权衡考虑。
+ 
+ */
+</script>

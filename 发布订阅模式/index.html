@@ -1,0 +1,72 @@
+<script>
+  // 在JavaScript中，你可以使用发布订阅模式（也称为观察者模式）来实现一个简单的事件系统。
+
+  class EventManager {
+      constructor() {
+        this.events = new Map();
+      }
+
+      subscribe(eventName, callback) {
+        if (!this.events.has(eventName)) {
+          this.events.set(eventName, new Set());
+        }
+        //将event保存到对应eventName的set中
+        this.events.get(eventName).add(callback);
+      }
+
+      publish(eventName, data) {
+        if (this.events.has(eventName)) {
+          this.events.get(eventName).forEach(callback => callback(data));
+        }
+      }
+
+      unsubscribe(eventName, callback) {
+        if (this.events.has(eventName)) {
+          const subscribers = this.events.get(eventName);
+          subscribers.delete(callback);
+          //如果没有要监听的事件，则删除事件名
+          if (subscribers.size === 0) {
+            this.events.delete(eventName);
+          }
+        }
+      }
+    }
+
+    const eventManager = new EventManager();
+
+    const callback1 = data => {
+      console.log('Callback 1:', data);
+    };
+    eventManager.subscribe('event1', callback1);
+
+    const callback2 = data => {
+      console.log('Callback 2:', data);
+    };
+    eventManager.subscribe('event1', callback2);
+
+    eventManager.publish('event1', 'Hello, subscribers!');
+
+    eventManager.unsubscribe('event1', callback1);
+
+    eventManager.publish('event1', 'Hello again!');
+
+    /**
+     * 这个示例展示了如何使用发布订阅模式实现一个简单的事件系统，允许对象之间解耦并通过事件进行通信。
+     * 你可以根据需要添加更多的事件和订阅者，并在订阅者的回调函数中执行自定义的操作。
+     * 
+     * 优点：
+
+      解耦性：发布订阅模式能够实现发布者和订阅者之间的解耦，发布者和订阅者彼此独立，不需要直接了解对方的存在，从而提高了代码的可维护性和可扩展性。
+      松散耦合：发布订阅模式通过定义统一的接口，让订阅者根据自身的需求进行订阅，发布者只关注事件的发布，双方之间的耦合度相对较低，使得系统更加灵活。
+      可重用性：由于发布者和订阅者之间的解耦，可以轻松地添加、移除或替换订阅者，使得代码更易于重用。
+      
+      缺点：
+
+      内存泄漏：如果订阅者没有正确地取消订阅，可能会导致内存泄漏问题。如果订阅者没有被正确地清理，发布者仍然保持对订阅者的引用，即使订阅者已经不再需要，也无法被垃圾回收。
+      异步处理复杂性：在异步场景下，发布订阅模式可能增加了处理异步事件的复杂性。当存在多个异步事件同时进行时，事件的顺序、依赖关系和错误处理可能会变得复杂。
+      难以调试和理解：由于发布订阅模式的事件流向可能是动态的，事件可以在系统中的多个地方订阅和发布，因此追踪事件的来源和传递路径可能会变得困难，使得代码调试和理解变得复杂。
+      
+      
+      需要根据具体的应用场景和需求来评估使用发布订阅模式的适用性，特别是在涉及大规模和复杂的系统时。在某些情况下，使用其他设计模式或采用更简单的事件传递机制可能更为合适。
+    */
+</script>

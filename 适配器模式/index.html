@@ -1,0 +1,55 @@
+<script>
+
+  //适配器模式是一种结构设计模式，它允许将一个类的接口转换成另一个类所期望的接口。
+
+  // 目标接口
+  class Target {
+    request() { }
+  }
+
+  // 适配者类
+  class Adaptee {
+    specificRequest() {
+      console.log("Adaptee specific request");
+    }
+  }
+
+  // 适配器类
+  class Adapter extends Target {
+    constructor(adaptee) {
+      super();
+      this.adaptee = adaptee;
+    }
+
+    request() {
+      this.adaptee.specificRequest();
+    }
+  }
+
+  // 客户端代码
+  const adaptee = new Adaptee();
+  const adapter = new Adapter(adaptee);
+
+  adapter.request();
+
+  /*
+
+  在上述示例中，我们有一个目标接口Target，其中声明了一个request方法，用于处理目标类所期望的请求。
+
+  适配者类Adaptee是我们需要适配的类，它拥有一个specificRequest方法，但该方法与目标接口的方法不兼容。
+
+  适配器类Adapter继承自目标接口Target，并接收一个适配者对象adaptee作为构造函数的参数。
+  在适配器类中，我们实现了request方法，并在该方法中调用适配者对象的specificRequest方法。
+
+  在客户端代码中，我们创建了适配者对象adaptee和适配器对象adapter，并将适配者对象传递给适配器的构造函数。
+  然后，我们通过调用适配器对象的request方法来发起请求。
+
+  适配器模式的关键在于适配器类，它充当着目标接口和适配者之间的桥梁，将适配者的接口转换成目标接口所期望的接口。
+  这种设计使得原本不兼容的类可以协同工作，提高了代码的复用性和灵活性。
+
+  需要注意的是，适配器模式有两种形式：类适配器和对象适配器。上述示例是对象适配器的实现方式，通过将适配者对象传递给适配器对象来进行适配。
+  在类适配器中，适配器类同时继承目标接口和适配者类，实现了目标接口的方法并调用适配者类的方法。
+
+  */
+
+</script>
